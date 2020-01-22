@@ -1,0 +1,71 @@
+
+void inorder(BinaryTreeNode<int>* root){
+    if(root!=NULL){
+        inorder(root->left);
+        cout<<root->data<<" ";
+        inorder(root->right);
+    }
+}
+void printMergeTrees( BinaryTreeNode<int>* root1, BinaryTreeNode<int>* root2)
+{
+	
+    if(!root1 && !root2){
+        return;
+    }
+    
+    if(!root1){
+        inorder(root2);
+        return;
+    }
+    
+    
+    if(!root2){
+        inorder(root1);
+        return;
+    }
+    
+    BinaryTreeNode<int>* temp1=root1;
+    BinaryTreeNode<int>* prev1=NULL;
+    
+    while(temp1->left){
+        prev1=temp1;
+        temp1=temp1->left;
+    }
+    
+    BinaryTreeNode<int>* temp2=root2;
+    BinaryTreeNode<int>* prev2=NULL;
+    
+    
+    while(temp2->left){
+        prev2=temp2;
+        temp2=temp2->left;
+    }
+    
+    if(temp1->data <=temp2->data){
+        
+        cout<<temp1->data<<" ";
+        
+        if(prev1==NULL){
+              
+            printMergeTrees(root1->right,root2);
+        }
+        else{
+            prev1->left=temp1->right;
+            printMergeTrees(root1,root2);
+        }
+    }
+    else{
+        
+        cout<<temp2->data<<" ";
+        
+        if(prev2==NULL){
+            printMergeTrees(root1,root2->right);
+        }
+        else{
+            prev2->left=temp2->right;
+             printMergeTrees(root1,root2);
+        }
+        
+    }
+    
+}
